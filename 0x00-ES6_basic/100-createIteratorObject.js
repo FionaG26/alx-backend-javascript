@@ -1,24 +1,25 @@
 export default function createIteratorObject(report) {
-  const departments = Object.values(report.allEmployees);
+  let departments = Object.keys(report.allEmployees);
+  let employees = [];
 
-  let currentDepartmentIndex = 0;
-  let currentEmployeeIndex = 0;
+  for (const department of departments) {
+    employees.push(...report.allEmployees[department]);
+  }
+
+  let currentIndex = 0;
 
   return {
     next() {
-      const currentDepartment = departments[currentDepartmentIndex];
-      const currentEmployee = currentDepartment[currentEmployeeIndex];
-
-      if (currentEmployeeIndex < currentDepartment.length - 1) {
-        currentEmployeeIndex++;
+      if (currentIndex < employees.length) {
+        return {
+          value: employees[currentIndex++],
+          done: false,
+        };
       } else {
-        currentDepartmentIndex++;
-        currentEmployeeIndex = 0;
+        return {
+          done: true,
+        };
       }
-
-      const done = currentDepartmentIndex >= departments.length;
-
-      return { value: currentEmployee, done };
     },
     [Symbol.iterator]() {
       return this;
