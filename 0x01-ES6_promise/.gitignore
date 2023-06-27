@@ -3,6 +3,7 @@ package.json
 babel.config.js
 utils.js
 .eslintrc.js
+package-lock.json
 0-main.js
 1-main.js
 2-main.js
